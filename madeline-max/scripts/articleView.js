@@ -3,8 +3,8 @@
 // REVIEW: Configure an object to hold all of our functions for dynamic updates and article-related event handlers.
 let articleView = {};
 
-articleView.populateFilters = function() {
-  $('article').each(function() {
+articleView.populateFilters = function () {
+  $('article').each(function () {
     // REVIEW: We can declare several variables at once and assign their values later when using let. Keep in mind that we cannot do this with const.
     let authorName, category, optionTag;
     if (!$(this).hasClass('template')) {
@@ -14,8 +14,7 @@ articleView.populateFilters = function() {
       authorName = $(this).attr('data-author');
 
       // Refactor this concatenation using a template literal.
-      optionTag = (`<option value=" ${authorName} "> ${authorName} </option>`);
-      console.log('option tag1', optionTag);
+      optionTag = (`<option value="${authorName}"> ${authorName} </option>`);
       if ($('#author-filter option[value="' + authorName + '"]').length === 0) {
         $('#author-filter').append(optionTag);
       }
@@ -26,7 +25,6 @@ articleView.populateFilters = function() {
 
       //Refactor this concatenation using a template literal.
       optionTag = (`<option value=" ${category} "> ${category} </option>`);
-      console.log('option tag2', optionTag);
 
       if ($('#category-filter option[value="' + category + '"]').length === 0) {
         $('#category-filter').append(optionTag);
@@ -35,24 +33,24 @@ articleView.populateFilters = function() {
   });
 };
 
-articleView.handleAuthorFilter = function() {
-  $('#author-filter').on('change', function() {
+articleView.handleAuthorFilter = function () {
+  $('#author-filter').on('change', function () {
     // REVIEW: Inside this function, "this" is the element that triggered the event handler function we are defining. "$(this)" is using jQuery to select that element (analogous to event.target that we have seen before), so we can chain jQuery methods onto it.
     if ($(this).val()) {
       // TODO: If the <select> menu was changed to an option that has a value, we first need to hide all the articles, and then show just the ones that match for the author that was selected.
-      $('articles').hide();
-      $(this).authorName.show();
+      $('article').hide();
+      $(`article[data-author='${$(this).val()}']`).fadeIn();
+
       // Use an "attribute selector" to find those articles, and fade them in for the reader.
-      $(this).attr('authorName').fade();
     } else {
       // TODO: If the <select> menu was changed to an option that is blank, we should first show all the articles, except the one article we are using as a template.
-      $('articles').show();
+      $(`articles`).show();
     }
-    $('#category-filter').val('');
+    $(`#category-filter`).val('');
   });
 };
 
-articleView.handleCategoryFilter = function() {
+articleView.handleCategoryFilter = function () {
   // TODO: Just like we do for #author-filter above, we should handle change events on the #category-filter element.
   // When an option with a value is selected, hide all the articles, then reveal the matches.
   // When the blank (default) option is selected, show all the articles, except for the template.
@@ -60,7 +58,7 @@ articleView.handleCategoryFilter = function() {
 
 };
 
-articleView.handleMainNav = function() {
+articleView.handleMainNav = function () {
   // TODO: Add an event handler to .main-nav elements that will power the Tabs feature.
   // Clicking any .tab element should hide all the .tab-content sections, and then reveal the single .tab-content section that is associated with the clicked .tab element.
   // So: You need to dynamically build a selector string with the correct ID, based on the data available to you on the .tab element that was clicked.
@@ -69,7 +67,7 @@ articleView.handleMainNav = function() {
   $('.main-nav .tab:first').click();
 };
 
-articleView.setTeasers = function() {
+articleView.setTeasers = function () {
   // REVIEW: Hide elements beyond the first 2 in any article body.
   $('.article-body *:nth-of-type(n+2)').hide();
 
@@ -78,7 +76,7 @@ articleView.setTeasers = function() {
 };
 
 // TODO: Call all of the above functions, once we are sure the DOM is ready.
-$(document).ready(function() {
+$(document).ready(function () {
   articleView.populateFilters();
   articleView.handleAuthorFilter();
   articleView.handleCategoryFilter();
