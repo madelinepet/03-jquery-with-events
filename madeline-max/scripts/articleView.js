@@ -1,6 +1,5 @@
 'use strict';
 
-
 let articleView = {};
 
 articleView.populateFilters = function () {
@@ -78,10 +77,8 @@ articleView.setTeasers = function () {
 
   $('article').on('click', 'a.read-on', function (event) {
     event.preventDefault();
-    console.log($(this).parent());
     $(this).parent().find('*').show();
-
-  }).
+  })
 };
 
 $(document).ready(function () {
